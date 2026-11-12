@@ -17,7 +17,7 @@ if num_draws < 50
     results_root = fullfile(tempdir, 'm4_quick_check', 'power_convention');
     fprintf('QUICK CHECK (%d draws): output goes to %s\n', num_draws, results_root);
 else
-    results_root = fullfile(here, '..', '..', 'Results', 'diagnostics', 'power_convention');
+    results_root = fullfile(here, '..', '..', '..', 'Results', 'diagnostics', 'power_convention');
 end
 
 p = default_config(struct('Pmax_dBm', 23, 'num_draws', num_draws, 'run_joint', false));

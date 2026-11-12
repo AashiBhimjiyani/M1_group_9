@@ -16,7 +16,7 @@ if num_draws < 50
     results_root = fullfile(tempdir, 'm4_quick_check', 'sweep_antennas');
     fprintf('QUICK CHECK (%d draws): output goes to %s\n', num_draws, results_root);
 else
-    results_root = fullfile(here, '..', '..', 'Results', 'sweep_antennas');
+    results_root = fullfile(here, '..', '..', '..', 'Results', 'sweep_antennas');
 end
 
 NK_list = [3 4 6];                        % N = K = 2 is the anchor

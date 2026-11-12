@@ -16,7 +16,7 @@ if num_draws < 50
     results_root = fullfile(tempdir, 'm4_quick_check', 'sweep_power');   % keep quick checks out of Results/
     fprintf('QUICK CHECK (%d draws): output goes to %s\n', num_draws, results_root);
 else
-    results_root = fullfile(here, '..', '..', 'Results', 'sweep_power');
+    results_root = fullfile(here, '..', '..', '..', 'Results', 'sweep_power');
 end
 
 P_list_dBm = [0 5 10 15];                 % 20 dBm is the anchor
