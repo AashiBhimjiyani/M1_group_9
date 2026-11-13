@@ -29,7 +29,7 @@ Copied from `nonreciprocal/README.md`:
 
 | Check | Source | Status |
 | --- | --- | --- |
-| Finite-difference gradient check, surrogate vs eq. (21a), monotone ascent, unitarity about 1e-15, power constraint, block structure | `nonreciprocal/test_general_baseline.m` | TODO: record PASS/FAIL and observed output in `Results/validation_log.md` (Member 1) |
+| Finite-difference gradient check, surrogate vs eq. (21a), monotone ascent, unitarity about 1e-15, power constraint, block structure | `nonreciprocal/test_general_baseline.m` | PASS, 12 of 12 checks. Surrogate matches eq. (21a) to 1.4e-14; gradient vs finite difference relative error at most 3.7e-9 for Rg = 1, 4, 8; theta updates are monotone and unitary to about 1e-15; joint designs keep power and unitarity; fixed-V general FC has nonzero symmetry error (3.22), as expected. Source: `Results/diagnostics/baseline_validation/test_general_baseline.txt` |
 | Qualitative trends (rate grows with Pmax; FC >= GC >= SC) | `nonreciprocal/validate_li_trends.m` via `experiments/run_li_trend_validation.m`, 20 draws | PASS. Mean rate (bps/Hz) at 0, 5, 10, 15, 20 dBm: SC 1.94, 3.80, 6.85, 11.29, 16.92; GC 2.68, 5.31, 9.48, 15.10, 21.00; FC 3.00, 6.06, 10.89, 16.74, 22.97. Source: `Results/diagnostics/li_trends/results/validate_li_trends.mat` |
 | Power-convention check (Pmax = 23 dBm, total) | `experiments/run_power_convention_check.m`, 50 draws | Done, 0 failed runs. Reciprocal FC = 12.17 ± 0.34 bps/Hz. Gap (general minus reciprocal, V-frozen): GC 0.101 ± 0.019 (0.73 ± 0.14 %), FC 0.023 ± 0.012 (0.17 ± 0.09 %). Source: `Results/diagnostics/power_convention/P23dBm/` |
 
