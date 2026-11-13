@@ -22,3 +22,12 @@ old_dir = pwd;
 cd(outdir);
 cleanup = onCleanup(@() cd(old_dir));     % always return to the original folder
 run(fullfile(here, '..', 'nonreciprocal', 'validate_li_trends.m'));
+
+% MATLAB's run() changes into the script's own folder, so the cd above does not
+% control where validate_li_trends.m writes. Move its outputs into outdir.
+src_results = fullfile(here, '..', 'nonreciprocal', 'results');
+dst_results = fullfile(outdir, 'results');
+if ~exist(dst_results, 'dir'), mkdir(dst_results); end
+for f = {'validate_li_trends.mat', 'validate_li_trends.png'}
+    movefile(fullfile(src_results, f{1}), fullfile(dst_results, f{1}));
+end
