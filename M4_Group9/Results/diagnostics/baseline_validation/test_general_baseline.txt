@@ -1,0 +1,14 @@
+[PASS] sub-problem objective matches eq.(21a)  (|diff| = 1.4e-14)
+[PASS] gradient vs finite difference, Rg=1  (rel err = 4.7e-12)
+[PASS] gradient vs finite difference, Rg=4  (rel err = 1.7e-11)
+[PASS] gradient vs finite difference, Rg=8  (rel err = 3.7e-09)
+[PASS] theta update ascends & stays unitary, Rg=1  (f: -40.13 -> 3.039, unitary err 7.9e-16)
+[PASS] theta update ascends & stays unitary, Rg=4  (f: -135 -> 3.227, unitary err 2.2e-15)
+[PASS] theta update ascends & stays unitary, Rg=8  (f: -124 -> 0.6848, unitary err 2.1e-15)
+[PASS] SC        joint: rate 1.550 -> 11.464 in 300 outer its | monotone=1 power=1 unitary=1e-15 blocks=1 metric-match=1
+[PASS] GC(Rg=4)  joint: rate 1.550 -> 13.037 in 300 outer its | monotone=1 power=1 unitary=3e-15 blocks=1 metric-match=1
+[PASS] FC        joint: rate 1.550 -> 13.734 in 300 outer its | monotone=1 power=1 unitary=6e-15 blocks=1 metric-match=1
+[PASS] fixed-V general FC: rate 1.550 -> 7.836 (V recomputed: 8.412), sym err 3.22 (>0 expected), unitary err 5.3e-15
+[PASS] mean over 4 draws: SC 10.467 <= GC 12.445 <= FC 13.216 bps/Hz
+
+0 check(s) failed.
