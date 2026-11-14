@@ -52,7 +52,7 @@ run('experiments/run_ris_size_sweep.m');
 
 3. **Task 4 — Full RIS-Size Sweep ($R \in \{16, 48, 64\}$, $R_g=4$, $G \in \{4, 12, 16\}$, SC/GC/FC):**
    ```matlab
-   cd('M4_Group9/Code/src'); setup_paths;
+   Outputs: `M4_Group9/Results/sweep_ris_size/R{16,48,64}/`.
    sweep_mode = 'full'; R_list = [16, 48, 64]; % set nd_R64 = 30 if R=64 is too slow
    run('experiments/run_ris_size_sweep.m');
    ```

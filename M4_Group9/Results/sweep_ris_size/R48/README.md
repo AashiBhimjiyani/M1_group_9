@@ -2,7 +2,6 @@
 
 ## Execution Status
 **Executed — Complete.**  
-- **Quick Test (3 draws):** Complete (`quick_test_3draws/`). Runtime: 72.55s (24.18s/draw).
 - **Full Run (50 draws):** Complete.
   - `per_draw.csv` (50 draws for SC, GC, FC)
   - `summary.csv` (aggregated metrics)

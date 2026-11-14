@@ -2,7 +2,7 @@ function m4_smoke_test()
 %M4_SMOKE_TEST  Fresh-clone check.  Run:  cd M4_Group9/Code/src; m4_smoke_test
 % 1) code folders present   2) setup_paths   3) test_common_framework (no FAIL lines)
 % 4) analyze_gap reproduces the M3 anchor numbers.
-% Copy the printed output into Results/validation_log.md.
+% Copy the printed output into a log file.
 srcdir = fileparts(fileparts(mfilename('fullpath')));      % Code/src
 cd(srcdir);
 
