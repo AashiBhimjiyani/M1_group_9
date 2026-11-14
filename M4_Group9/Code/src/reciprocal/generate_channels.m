@@ -10,12 +10,25 @@ function [H_TX, H_RX] = generate_channels(p)
     H_TX_los = exp(1i*2*pi*rand(p.R, p.N));
     H_RX_los = exp(1i*2*pi*rand(p.K, p.R));
     
-    if p.Kf_dB == -Inf
+    % Compute linear Rician K-factor from Kf_dB if present
+    if isfield(p, 'Kf_dB')
+        if p.Kf_dB == -Inf
+            Kf = 0;
+        else
+            Kf = 10^(p.Kf_dB / 10);
+        end
+    elseif isfield(p, 'Kf')
+        Kf = p.Kf;
+    else
+        Kf = 0;
+    end
+
+    if Kf == 0
         H_TX_small = H_TX_nlos;
         H_RX_small = H_RX_nlos;
     else
-        H_TX_small = sqrt(p.Kf/(p.Kf+1))*H_TX_los + sqrt(1/(p.Kf+1))*H_TX_nlos;
-        H_RX_small = sqrt(p.Kf/(p.Kf+1))*H_RX_los + sqrt(1/(p.Kf+1))*H_RX_nlos;
+        H_TX_small = sqrt(Kf/(Kf+1))*H_TX_los + sqrt(1/(Kf+1))*H_TX_nlos;
+        H_RX_small = sqrt(Kf/(Kf+1))*H_RX_los + sqrt(1/(Kf+1))*H_RX_nlos;
     end
     
     H_TX = sqrt(p.PL_BS_RIS) * H_TX_small;
