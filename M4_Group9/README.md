@@ -5,7 +5,7 @@ Aashi Bhimjiyani (AU2440027), Kahaan Shah (AU2440047), Prakshal Shah (AU2440265)
 
 The project quantifies the sum-rate cost of enforcing reciprocity (a symmetric scattering matrix, Θ = Θᵀ) on a lossless BD-RIS, for single-, group- and fully-connected architectures, against a general (non-reciprocal) unitary baseline under matched channels, start matrices and frozen MMSE precoders.
 
-**Final report:** [`Report/M4_G9_Report.pdf`](Report/M4_G9_Report.pdf) (LaTeX source `Report/M4_G9_Report.tex`, figures in `Report/figures/`).
+**Final report:** [`Report/M4_G9_Report.pdf`](Report/M4_G9_Report.pdf) (figures in `Report/figures/`).
 
 ## Contributions
 
@@ -34,7 +34,6 @@ M4_Group9/
 ├── Data/README.md                <- synthetic channel generation notes
 ├── Report/
 │   ├── M4_G9_Report.pdf          <- final report
-│   ├── M4_G9_Report.tex
 │   └── figures/
 ├── Results/
 │   ├── README.md                 <- results index

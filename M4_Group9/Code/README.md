@@ -6,8 +6,8 @@
 - `src/common/` — Member 4's shared channel generation, initialization, MMSE beamformer, path loss, SINR, sum-rate functions (`common_*`), and matched experiment runner/saver/plotter (`run_matched_experiment.m`, `save_matched_results.m`, `plot_matched_results.m`).
 - `src/reciprocal/` — Member 2's reciprocal BD-RIS Riemannian CGA optimizer (`run_cga_optimizer.m`), FP surrogate (`fp_variables.m`, `objective.m`, `gradient_theta.m`), Stiefel geometry (`tangent_projection.m`, `retraction.m`, `armijo_search.m`, `enforce_symmetry_unitarity.m`), M3 stretch joint solver (`reciprocal_joint_optimizer.m`), and validation tests.
 - `src/nonreciprocal/` — Member 3's general (non-reciprocal) fixed-V matched baseline (`general_fixedV_optimizer.m`) and Li et al. joint baseline (`li_joint_optimizer.m`).
-- `src/experiments/` — Shared M4 experiment helpers (`resolve_anchor_path.m`, `configs_match_ckpt.m`) plus Member 2 M4 drivers (`test_task1_max_iter.m`, `run_cap_diagnostic.m`, `run_nu_sensitivity.m`, `run_ris_size_sweep.m`).
-- `src/tests/` — Member 4's `test_common_framework.m` parity and audit check suite.
+- `src/experiments/` — Experiment drivers: `run_power_sweep.m`, `run_antenna_sweep.m`, `run_power_convention_check.m`, `run_li_trend_validation.m`, `run_ris_size_sweep.m`, `run_cap_diagnostic.m`, `run_nu_sensitivity.m`; analysis `analyze_gap.m` (paired gap statistics, bootstrap CIs) and `make_figures.m`; helpers `resolve_anchor_path.m`, `configs_match_ckpt.m`; `test_task1_max_iter.m`. The group-size and Rician runs are `src/common/run_group_size_sweep.m` and `run_rician_anchor.m`.
+- `src/tests/` — `test_common_framework.m` (parity and audit checks), `test_analyze_gap_anchor.m` (anchor statistics) and `m4_smoke_test.m` (runs both; use for a fresh-clone check).
 
 ## Dependencies
 - MATLAB (tested target: R2025a); no third-party toolboxes required.
