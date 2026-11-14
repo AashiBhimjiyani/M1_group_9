@@ -1,0 +1,4 @@
+--- Finite Difference Gradient Check ---
+Rg =  1: Relative Error = 2.324262e-09
+Rg =  4: Relative Error = 1.829318e-09
+Rg = 32: Relative Error = 4.549067e-09
