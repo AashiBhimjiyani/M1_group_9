@@ -1,5 +1,5 @@
 function save_matched_results(res, outdir)
-% SAVE_MATCHED_RESULTS  Standard result format for every matched experiment (Member 4).
+% SAVE_MATCHED_RESULTS  Standard result format for matched experiments (Member 4 base + M4 tracking).
 %   outdir/matched_results.mat   full struct `res` (incl. histories, config)
 %   outdir/per_draw.csv          one row per (draw, architecture)
 %   outdir/summary.csv           mean/SE per architecture and metric
@@ -9,7 +9,7 @@ function save_matched_results(res, outdir)
 
     save(fullfile(outdir, 'matched_results.mat'), 'res', '-v7');
 
-    % ---- per-draw table (long format) ----
+    % ---- per-draw table (M2 Member 4 long format + M4 convergence/Armijo tracking) ----
     [D, A] = ndgrid(1:nd, 1:na);
     d = D(:);  a = A(:);
     T = table(d, p.seed_base + d, p.arch_names(a)', p.Rg_list(a)', ...
@@ -23,6 +23,13 @@ function save_matched_results(res, outdir)
         'rec_fv','rec_v2','gen_fv','gen_v2','gen_jt','gap_fv','gap_v2','gap_fv_pct', ...
         'rec_iters','gen_iters','jt_iters','rec_sym_err','gen_sym_err','rec_uni_err','gen_uni_err', ...
         'rec_time_s','gen_time_s','jt_time_s'});
+    if isfield(res, 'rec_pre'),         T.rec_pre         = res.rec_pre(:); end
+    if isfield(res, 'rec_conv'),        T.rec_converged   = res.rec_conv(:); end
+    if isfield(res, 'rec_term'),        T.rec_term_reason = res.rec_term(:); end
+    if isfield(res, 'rec_armijo_hits'), T.rec_armijo_hits = res.rec_armijo_hits(:); end
+    if isfield(res, 'gen_conv'),        T.gen_converged   = res.gen_conv(:); end
+    if isfield(res, 'gen_term'),        T.gen_term_reason = res.gen_term(:); end
+    if isfield(res, 'gen_armijo_hits'), T.gen_armijo_hits = res.gen_armijo_hits(:); end
     writetable(T, fullfile(outdir, 'per_draw.csv'));
 
     % ---- summary table ----
