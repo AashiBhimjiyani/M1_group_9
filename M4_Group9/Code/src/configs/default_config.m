@@ -22,6 +22,7 @@ function p = default_config(overrides)
 %   num_draws      number of matched channel draws
 %   nu             reciprocal symmetry-penalty weight
 %   eps_tol        CGA stopping tolerance (abs. change of surrogate objective)
+%   max_iter       CGA iteration cap for both reciprocal & general fixed-V (default 8000)
 %   run_joint      also run Li's joint V/Theta design (slower)
     if nargin < 1, overrides = struct(); end
 
@@ -41,7 +42,9 @@ function p = default_config(overrides)
     p.num_draws = 5;
     p.nu        = 1.0;
     p.eps_tol   = 1e-8;
+    p.max_iter  = 8000;
     p.run_joint = true;
+    p.arch_names = {'SC', 'GC', 'FC'};
 
     % ---------------- apply overrides ----------------
     names = fieldnames(overrides);
@@ -50,14 +53,37 @@ function p = default_config(overrides)
     end
 
     % ---------------- derived quantities ----------------
+    has_fading = isfield(overrides, 'fading') && ~isempty(overrides.fading);
+    has_Kf     = isfield(overrides, 'Kf_dB')  && ~isempty(overrides.Kf_dB);
+    if has_Kf && ~has_fading
+        if isinf(p.Kf_dB) && p.Kf_dB < 0
+            p.fading = 'rayleigh';
+        else
+            p.fading = 'rician';
+        end
+    elseif has_fading && has_Kf
+        is_ray_kf = isinf(p.Kf_dB) && p.Kf_dB < 0;
+        if strcmpi(p.fading, 'rayleigh') && ~is_ray_kf
+            error('default_config: fading=''rayleigh'' conflicts with finite Kf_dB=%g.', p.Kf_dB);
+        elseif strcmpi(p.fading, 'rician') && is_ray_kf
+            error('default_config: fading=''rician'' conflicts with Kf_dB=-Inf.');
+        end
+    end
+
     switch lower(p.fading)
         case 'rayleigh'
-            p.Kf_dB = -Inf;
+            p.fading = 'rayleigh';
+            p.Kf_dB  = -Inf;
         case 'rician'
+            p.fading = 'rician';
             if isinf(p.Kf_dB), p.Kf_dB = 2; end       % default Rician K-factor
         otherwise
             error('default_config: fading must be ''rayleigh'' or ''rician''.');
     end
+    if isempty(p.max_iter)
+        p.max_iter = 8000;
+    end
+    validateattributes(p.max_iter, {'numeric'}, {'scalar', 'integer', 'positive'});
     if mod(p.R, p.G) ~= 0
         error('default_config: R (%d) must be divisible by G (%d).', p.R, p.G);
     end
@@ -69,6 +95,16 @@ function p = default_config(overrides)
     p.Kf = 10^(p.Kf_dB/10);                             % 0 for Rayleigh
 
     % ---------------- architectures (block size Rg) ----------------
-    p.arch_names = {'SC', 'GC', 'FC'};
-    p.Rg_list    = [1, p.R / p.G, p.R];                 % SC, GC, FC
+    if ~isfield(overrides, 'Rg_list') || isempty(overrides.Rg_list)
+        p.Rg_list = zeros(1, numel(p.arch_names));
+        for idx_a = 1:numel(p.arch_names)
+            switch upper(p.arch_names{idx_a})
+                case 'SC', p.Rg_list(idx_a) = 1;
+                case 'GC', p.Rg_list(idx_a) = p.R / p.G;
+                case 'FC', p.Rg_list(idx_a) = p.R;
+                otherwise
+                    error('default_config: unknown arch name "%s".', p.arch_names{idx_a});
+            end
+        end
+    end
 end
