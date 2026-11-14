@@ -1,7 +1,7 @@
 % test_common_framework.m  --  sanity + parity checks for Member 4's common framework.
 % Run:  run('M4_Group9/Code/src/tests/test_common_framework.m')   (every line prints PASS/FAIL)
 here = fileparts(mfilename('fullpath'));
-addpath(fullfile(here, '..'));  setup_paths();
+addpath(fileparts(here));  setup_paths();
 nfail = 0;
 lbl = {'FAIL', 'PASS'};
 chk = @(name, ok) fprintf('%s  %s\n', lbl{double(logical(ok)) + 1}, name);
@@ -63,5 +63,13 @@ Vd = sqrt(0.05) * eye(2);
 sn = common_sinr(eye(2), eye(2), eye(2), Vd, pp);
 ok = norm(sn - 0.05 / pp.N0) < 1e-6 * (0.05 / pp.N0);
 nfail = nfail + ~ok;  chk('SINR of an interference-free 2x2 case equals P/N0', ok);
+
+%% 8. M4 audit fixes: Kf_dB/fading synchronization, G -> Rg_list, and max_iter
+pp_ric = default_config(struct('Kf_dB', 5));
+ok = strcmp(pp_ric.fading, 'rician') && abs(pp_ric.Kf - 10^(5/10)) < 1e-12;
+nfail = nfail + ~ok;  chk('Kf_dB override updates fading=''rician'' and linear Kf', ok);
+pp_grp = default_config(struct('R', 48, 'G', 12, 'max_iter', 150));
+ok = isequal(pp_grp.Rg_list, [1 4 48]) && pp_grp.max_iter == 150;
+nfail = nfail + ~ok;  chk('G override updates Rg_list and preserves max_iter', ok);
 
 if nfail == 0, fprintf('\nALL CHECKS PASSED\n'); else, fprintf('\nSOME CHECKS FAILED (%d)\n', nfail); end
